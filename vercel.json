@@ -1,0 +1,8 @@
+
+{
+  "rewrites": [
+    { "source": "/mobile_brands", "destination": "/mobile_brands/index.html" },
+    { "source": "/telecom_operators", "destination": "/telecom_operators/index.html" },
+    { "source": "/ecommerce_insights", "destination": "/ecommerce_insights/index.html" }
+  ]
+}
