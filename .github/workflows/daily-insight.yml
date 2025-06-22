@@ -1,0 +1,15 @@
+name: Daily Insight Update
+
+on:
+  schedule:
+    - cron: '45 12 * * *' # Runs at 1PM IST (7:30 AM UTC)
+  workflow_dispatch:      # Optional: lets you run it manually too
+
+jobs:
+  ping-vercel-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send POST to /api/insights on Vercel
+        run: |
+          curl -X POST https://dashboard-brands.vercel.app/api/insights
