@@ -3,7 +3,6 @@
 import { BigQuery } from '@google-cloud/bigquery';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { get as readEdgeConfig } from '@vercel/edge-config'; // For reading
-import fetch from 'node-fetch'; // For writing (PATCH request)
 
 // Load BigQuery credentials from environment variable
 const credentials = JSON.parse(process.env.BIGQUERY_CREDENTIALS);
