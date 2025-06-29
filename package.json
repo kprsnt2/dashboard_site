@@ -10,8 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/bigquery": "^7.0.0",  <-- Add this line
-    "@google/generative-ai": "^0.14.1"   <-- Add this line (check for latest version)
-    // Keep any other existing dependencies here
+    "@google-cloud/bigquery": "^7.0.0", 
+    "@google/generative-ai": "^0.14.1"  
   }
 }
