@@ -24,7 +24,7 @@ const VERCEL_API_TOKEN = process.env.VERCEL_API_TOKEN;
 async function generateInsight() {
   let newInsight = "Insight not generated yet.";
   try {
-    const query = `SELECT * FROM \`isentropic-keep-450218-e5.Brand.cricketers_tb_sentiment\` WHERE DATE(published_at) = (SELECT DATE(MAX(published_at)) FROM \`isentropic-keep-450218-e5.Brand.cricketers_tb_sentiment\`) ORDER BY published_at DESC`;
+    const query = `SELECT source_name, title, brand, title_sentiment_category FROM \`isentropic-keep-450218-e5.Brand.cricketers_tb_sentiment\` WHERE DATE(published_at) = (SELECT DATE(MAX(published_at)) FROM \`isentropic-keep-450218-e5.Brand.cricketers_tb_sentiment\`) ORDER BY published_at DESC`;
     const [rows] = await bigquery.query({ query });
 
     if (!rows || rows.length === 0) {
@@ -32,7 +32,19 @@ async function generateInsight() {
     } else {
       const latestData = rows[0];
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-      const prompt = `Based on this data: ${JSON.stringify(latestData)}, provide a concise and insightful summary for a daily report on cricketers where brand column has the cricketer names.`;
+      const prompt = `You are an expert cricket news analyst. Here is a JSON array of recent articles about cricketers. Each object contains 'source_name', 'title', 'brand' (cricketer name), and 'title_sentiment_category' (e.g., 'Positive', 'Negative', 'Neutral').
+
+      Your task is to provide a concise, insightful, and actionable summary for a daily report. Focus on:
+      1.  **Top Brands (Cricketers) by Coverage:** Identify which cricketers received the most articles.
+      2.  **Sentiment Analysis (Highlighting Negative):** For each mentioned cricketer, summarize their overall sentiment. **Explicitly highlight if a cricketer has a notable amount of negative sentiment and provide a brief context if possible (e.g., "X had significant negative sentiment due to Y").**
+      3.  **Top Publishing Sources:** Identify which sources published the most articles related to cricketers.
+
+      Keep the language professional and clear. Do not just list data; provide an interpretive summary.
+
+      Here is the data:
+      ${JSON.stringify(rows, null, 2)}
+      `;
+
       const result = await model.generateContent(prompt);
       newInsight = result.response.text();
     }
