@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cricketers Daily Insights Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -23,11 +24,31 @@
       border-left: 5px solid #2563eb;
       padding: 16px;
       margin-top: 20px;
-      font-weight: 500;
-      font-size: 1.1rem;
+      /* font-weight: 500; Remove or adjust these if you want Markdown to control them */
+      /* font-size: 1.1rem; */
       border-radius: 6px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+
+    /* Add some basic styling for the Markdown elements if desired */
+    #insight h2 { /* For titles like "Top Brands (Cricketers) by Coverage:" which might be H2 based on Gemini's output */
+        font-size: 1.3rem;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+    }
+    #insight p {
+        margin-bottom: 0.5em;
+        line-height: 1.5;
+    }
+    #insight ul {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        padding-left: 25px; /* Indent list items */
+    }
+    #insight strong {
+        font-weight: bold; /* Ensure bold is actually bold */
+    }
+
 
     iframe {
       margin-top: 30px;
@@ -44,7 +65,6 @@
 
   <div id="insight">Loading latest insights...</div>
 
-  <!-- Replace the src URL with your own Looker Studio embed link -->
   <iframe
     src="https://lookerstudio.google.com/embed/reporting/383739f5-4a49-4cfc-a45e-1c5bcff7be1a/page/p_0awaogb8sd"
     allowfullscreen
@@ -56,8 +76,11 @@
         const res = await fetch("/api/insights");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        document.getElementById("insight").innerText =
-          data.insight || "Insight not yet generated for today.";
+        const insightElement = document.getElementById("insight");
+
+        // --- THE KEY CHANGE: Use innerHTML and marked.parse() ---
+        insightElement.innerHTML = marked.parse(data.insight || "Insight not yet generated for today.");
+
       } catch (err) {
         document.getElementById("insight").innerText =
           "Unable to load insights at the moment.";
@@ -68,4 +91,3 @@
   </script>
 </body>
 </html>
-
