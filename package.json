@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/bigquery": "^7.0.0", 
-    "@google/generative-ai": "^0.14.1"  
+    "@google-cloud/bigquery": "^7.0.0",
+    "@google/generative-ai": "^0.14.1",
+    "@vercel/edge-config": "^1.0.0",
+    "node-fetch": "^3.0.0"  
   }
 }
