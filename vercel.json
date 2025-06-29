@@ -9,7 +9,7 @@
   "crons": [
     {
       "path": "/api/insights",
-      "schedule": "45 0 * * *" // This is 00:45 UTC, which is 6:15 AM IST
+      "schedule": "45 0 * * *" 
     }
   ]
 }
