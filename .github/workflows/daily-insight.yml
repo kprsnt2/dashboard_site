@@ -4,8 +4,6 @@ on:
   schedule:
     # Runs every day at 00:00 UTC (midnight UTC)
     # Adjust the cron expression for your desired time.
-    # For example, '30 0 * * *' would be 00:30 UTC.
-    # Use a tool like crontab.guru to help generate cron expressions.
     - cron: '0 0 * * *'
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
@@ -19,14 +17,7 @@ jobs:
 
       - name: Make POST request to update insight
         run: |
-          # Replace 'YOUR_APP_URL' with the actual URL where your API is hosted.
-          # For example, if you're deploying on Vercel or Netlify, this would be your deployed URL.
-          # If running locally, you'd need a tunneling service or simulate the call.
-          # For production, ensure this URL is accessible from the GitHub Actions runner.
           curl -X POST "https://dashboard-brands.vercel.app/api/insights" \
                -H "Content-Type: application/json" \
                -d '{}' # An empty JSON body is sufficient for your current POST handler
-        env:
-          # If your API has any authentication, you'd add secrets here.
-          # For this specific API, no authentication is shown, but in a real app, you might add an API key.
-          # API_KEY: ${{ secrets.API_KEY }}
+          # The 'env:' block has been removed as it's not needed here.
