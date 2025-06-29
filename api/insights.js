@@ -19,7 +19,7 @@ let cachedInsight = "Insight not generated yet.";
 async function generateInsight() {
   try {
     // Query the latest data from BigQuery
-    const query = `SELECT * FROM \`isentropic-keep-450218-e5.Brand.cricketers_tb_sentiment\` ORDER BY date DESC LIMIT 1`;
+    const query = `SELECT * FROM \`isentropic-keep-450218-e5.Brand.cricketers_tb_sentiment\` ORDER BY published_at DESC LIMIT 1`;
     const [rows] = await bigquery.query({ query });
 
     if (!rows || rows.length === 0) {
