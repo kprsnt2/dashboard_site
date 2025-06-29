@@ -1,8 +1,15 @@
-
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
+    { "source": "/cricketers", "destination": "/cricketers/index.html" },
     { "source": "/mobile_brands", "destination": "/mobile_brands/index.html" },
     { "source": "/telecom_operators", "destination": "/telecom_operators/index.html" },
     { "source": "/ecommerce_insights", "destination": "/ecommerce_insights/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/insights",
+      "schedule": "45 0 * * *" // This is 00:45 UTC, which is 6:15 AM IST
+    }
   ]
 }
