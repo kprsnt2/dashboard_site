@@ -41,11 +41,15 @@ async function generateInsight() {
   }
 }
 
+// Inside api/insights.js
 export default async function handler(req, res) {
   if (req.method === 'POST') {
+    // This part will now be triggered by Vercel Cron Jobs
     await generateInsight();
     return res.status(200).json({ message: "Insight refreshed." });
   } else {
-    return res.status(200).json({ insight: cachedInsight });
+    // Your GET request logic (reading from GCS)
+    const currentInsight = await readInsightFromGCS();
+    return res.status(200).json({ insight: currentInsight });
   }
 }
