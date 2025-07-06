@@ -4,12 +4,16 @@
     { "source": "/cricketers", "destination": "/cricketers/index.html" },
     { "source": "/mobile_brands", "destination": "/mobile_brands/index.html" },
     { "source": "/telecom_operators", "destination": "/telecom_operators/index.html" },
-    { "source": "/ecommerce_insights", "destination": "/ecommerce_insights/index.html" }
+    { "source": "/retailers", "destination": "/retailers/index.html" }
   ],
   "crons": [
     {
       "path": "/api/insights",
-      "schedule": "15 1 * * *" 
+      "schedule": "30 7 * * *" 
+    },
+    {
+      "path": "/api/retailer_insights",
+      "schedule": "30 7 * * *" 
     }
   ]
 }

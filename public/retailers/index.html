@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Retailers Daily Insights Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      background-color: #2563eb;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    #insight {
+      background: white;
+      border-left: 5px solid #2563eb;
+      padding: 16px;
+      margin-top: 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      line-height: 1.6;
+    }
+
+    /* Styling for the Markdown elements */
+    #insight h2 {
+        font-size: 1.3rem;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        color: #1f2937;
+    }
+    
+    #insight h3 {
+        font-size: 1.1rem;
+        margin-top: 1.2em;
+        margin-bottom: 0.4em;
+        color: #374151;
+    }
+    
+    #insight p {
+        margin-bottom: 0.8em;
+        line-height: 1.6;
+        color: #4b5563;
+    }
+    
+    #insight ul {
+        margin-top: 0.5em;
+        margin-bottom: 1em;
+        padding-left: 25px;
+    }
+    
+    #insight li {
+        margin-bottom: 0.3em;
+        line-height: 1.5;
+    }
+    
+    #insight strong {
+        font-weight: bold;
+        color: #1f2937;
+    }
+
+    /* Loading state styling */
+    #insight.loading {
+        color: #6b7280;
+        font-style: italic;
+    }
+
+    /* Error state styling */
+    #insight.error {
+        color: #dc2626;
+        border-left-color: #dc2626;
+    }
+
+    iframe {
+      margin-top: 30px;
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+        padding: 10px 15px;
+      }
+      
+      #insight {
+        padding: 12px;
+      }
+      
+      iframe {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Retailers Daily Insights Dashboard</h1>
+
+  <div id="insight" class="loading">Loading latest insights...</div>
+
+  <iframe
+    src="https://lookerstudio.google.com/embed/reporting/c6969ec7-d820-41fd-99a4-cecb14df7c9c/page/p_0awaogb8sd"
+    allowfullscreen
+    title="Retailers Analytics Dashboard"
+  ></iframe>
+
+  <script>
+    async function loadInsight() {
+      const insightElement = document.getElementById("insight");
+      
+      try {
+        const res = await fetch("/api/retailer_insights");
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        
+        // Remove loading class and add content
+        insightElement.classList.remove("loading");
+        insightElement.innerHTML = marked.parse(data.insight || "Insight not yet generated for today.");
+        
+      } catch (err) {
+        console.error("Error loading insights:", err);
+        insightElement.classList.remove("loading");
+        insightElement.classList.add("error");
+        insightElement.innerHTML = "Unable to load insights at the moment. Please try again later.";
+      }
+    }
+
+    // Load insights when page loads
+    loadInsight();
+    
+    // Optional: Auto-refresh every 30 minutes
+    setInterval(loadInsight, 30 * 60 * 1000);
+  </script>
+</body>
+</html>
