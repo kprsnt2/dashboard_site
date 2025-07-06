@@ -10,10 +10,6 @@
     {
       "path": "/api/insights",
       "schedule": "30 7 * * *" 
-    },
-    {
-      "path": "/api/retailer_insights",
-      "schedule": "30 7 * * *" 
     }
   ]
 }
