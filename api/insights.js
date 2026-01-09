@@ -31,7 +31,7 @@ async function generateInsight() {
       newInsight = "No data available in BigQuery to generate insight.";
     } else {
       const latestData = rows[0];
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
       const prompt = `You are an expert cricket news analyst. Here is a JSON array of recent articles about cricketers. Each object contains 'source_name', 'title', 'brand' (cricketer name), and 'title_sentiment_category' (e.g., 'Positive', 'Negative', 'Neutral').
 
       Your task is to provide a concise, insightful, and actionable summary for a daily report. Focus on:
